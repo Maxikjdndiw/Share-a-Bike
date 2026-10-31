@@ -297,6 +297,32 @@
     }, 2100);
   }
 
+  /* ---- Owner features (GPS tracker / smart lock) -------------------------
+     Hovering a button unfolds its explanation; a click (or tap) keeps it open
+     until clicked again. The matching spot on the bike lights up. */
+  var features = $("[data-features]");
+  if (features) {
+    var pinned = null;
+    var featureBtns = $$("[data-feature]", features);
+    var showFeature = function (key) {
+      featureBtns.forEach(function (btn) {
+        var k = btn.getAttribute("data-feature"), on = k === key;
+        btn.setAttribute("aria-expanded", String(on));
+        $('[data-panel="' + k + '"]', features).classList.toggle("is-open", on);
+        $('[data-spot="' + k + '"]', features).classList.toggle("is-active", on);
+      });
+    };
+    featureBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var k = btn.getAttribute("data-feature");
+        pinned = pinned === k ? null : k;
+        showFeature(pinned);
+      });
+      btn.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") showFeature(btn.getAttribute("data-feature")); });
+    });
+    $(".features", features).addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") showFeature(pinned); });
+  }
+
   /* ---- 6. Lunch break planner ------------------------------------------
      EDEKA Paasch is 1.5 km away. Minutes one way: about 18 on foot (5 km/h),
      about 5 by bike (17 km/h). Change these if you measure better values. */

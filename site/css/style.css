@@ -493,21 +493,41 @@ input, select { caret-color: var(--accent-strong); accent-color: var(--accent-st
 .owner-card__req { margin-bottom: 28px; font-size: 14px; color: var(--ink-2); }
 .owner-card__req b { color: var(--ink-2); font-weight: 600; }
 .owner-illu {
-  position: relative; aspect-ratio: 1; border-radius: var(--radius);
-  background: var(--surface);
-  display: grid; place-items: center; overflow: hidden;
+  position: relative; display: flex; flex-direction: column; gap: 20px;
+  padding: clamp(24px, 4vw, 40px) clamp(20px, 3.5vw, 36px) clamp(20px, 3vw, 28px);
+  border-radius: var(--radius); background: var(--surface);
 }
-.owner-illu::before { content: ""; position: absolute; left: 10%; right: 10%; bottom: 25%; height: 8px; border-radius: 4px; background: var(--card); }
-.owner-illu__bike { width: 72%; height: auto; aspect-ratio: 120 / 76; color: var(--ink); transform: translateY(4%); }
-.callout {
-  position: absolute; display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 14px 8px 10px; border-radius: 999px; background: var(--card);
-  font-size: 13px; font-weight: 600; white-space: nowrap;
+.owner-illu__stage { position: relative; }
+.owner-illu__bike { display: block; width: 100%; height: auto; color: var(--ink); }
+/* the two parts on the bike; light up when their button is active */
+.owner-illu__spot {
+  position: absolute; left: var(--x); top: var(--y);
+  width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  background: var(--accent); outline: 2px solid var(--accent); outline-offset: 3px;
+  transition: transform 200ms var(--ease), background-color 200ms ease;
 }
-.callout svg { width: 18px; height: 18px; color: var(--accent-strong); }
-.callout--gps { top: 16%; left: 12%; }
-.callout--lock { top: 30%; right: 8%; }
-.callout--you { bottom: 10%; left: 50%; transform: translateX(-50%); color: var(--ink-2); }
+.owner-illu__spot.is-active { transform: scale(1.3); background: var(--accent-strong); }
+/* buttons in the same rounded style as the rest of the site */
+.features__btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.feature-btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 14px;
+  border: 0; border-radius: 12px; background: var(--card); color: var(--ink);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease, transform 100ms var(--ease);
+}
+.feature-btn svg { width: 18px; height: 18px; color: var(--accent-strong); }
+.feature-btn .feature-btn__chev { width: 14px; height: 14px; color: currentColor; opacity: .6; transition: transform 200ms var(--ease); }
+.feature-btn:active { transform: scale(.97); }
+.feature-btn[aria-expanded="true"] { background: var(--ink); color: #fff; }
+.feature-btn[aria-expanded="true"] svg { color: var(--accent); }
+.feature-btn[aria-expanded="true"] .feature-btn__chev { transform: rotate(180deg); }
+@media (hover: hover) and (pointer: fine) { .feature-btn:not([aria-expanded="true"]):hover { background: #EAEAE6; } }
+/* explanation unfolds below the buttons */
+.feature-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 250ms var(--ease); }
+.feature-panel > div { overflow: hidden; }
+.feature-panel p { max-width: 30em; margin: 0 auto; padding-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-2); text-align: center; }
+.feature-panel.is-open { grid-template-rows: 1fr; }
+@media (max-width: 560px) { .features__btns { flex-direction: column; } .feature-btn { justify-content: center; } }
 @media (max-width: 900px) {
   .owner-card { grid-template-columns: 1fr; }
   .owner-card__visual { order: -1; }
