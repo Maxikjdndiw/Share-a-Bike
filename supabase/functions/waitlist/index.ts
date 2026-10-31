@@ -2,7 +2,8 @@
 // Share a Bike waitlist · Supabase Edge Function (Deno)
 //
 //   POST /waitlist              -> store sign up, send confirmation email
-//   GET  /waitlist?token=...    -> confirm email (double opt-in), redirect
+//   GET  /waitlist?token=...&json=1 -> confirm email (double opt-in), JSON { status }
+//        (called by confirmed.html; without json=1 it redirects, for older links)
 //   GET  /waitlist?stats=1      -> { total, riders, owners } (confirmed only)
 //
 // Secrets (set with `supabase secrets set NAME=value`, see README):
@@ -21,7 +22,6 @@ const ALLOWED_DOMAINS = (Deno.env.get("ALLOWED_DOMAINS") ?? "louisenlund.de")
 const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY") ?? "";
 const SENDER_EMAIL = Deno.env.get("SENDER_EMAIL") ?? "";
 const SENDER_NAME = Deno.env.get("SENDER_NAME") ?? "Share a Bike";
-const FUNCTION_URL = `${Deno.env.get("SUPABASE_URL")}/functions/v1/waitlist`;
 
 const db = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -61,7 +61,9 @@ function isSchoolEmail(email: string) {
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 async function sendConfirmation(email: string, name: string, token: string) {
-  const link = `${FUNCTION_URL}?token=${token}`;
+  // The button links to our own website (same domain as the sender), not to supabase.co:
+  // spam filters distrust links that point somewhere other than the sender.
+  const link = `${SITE_URL}/confirmed.html?token=${token}`;
   const res = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: { "api-key": BREVO_API_KEY, "content-type": "application/json", accept: "application/json" },
@@ -110,6 +112,7 @@ Deno.serve(async (req) => {
         status = "ok";
       }
     }
+    if (url.searchParams.get("json") === "1") return json(req, { status });
     return Response.redirect(`${SITE_URL}/confirmed.html?status=${status}`, 303);
   }
 
