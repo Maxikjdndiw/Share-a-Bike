@@ -1,0 +1,4 @@
+# Lets the public website call the function without a Supabase login.
+# (The function itself checks everything and only uses the service role internally.)
+[functions.waitlist]
+verify_jwt = false

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-36 -40 80 74" width="160" height="148" role="img" aria-label="Share a Bike logo">
+  <title>Share a Bike logo</title>
+  <path d="M-6 -20 A24 24 0 0 0 -6 28 Z" fill="#111111" stroke="#111111" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M6 -28 A24 24 0 0 1 6 20 Z" fill="#111111" stroke="#111111" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="32" cy="-30" r="7" fill="#5DCAA5"/>
+</svg>

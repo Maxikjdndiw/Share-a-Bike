@@ -1,0 +1,6 @@
+# Netlify: deploy the /site folder as-is. No build step.
+[build]
+  publish = "site"
+
+# Security + privacy headers live in site/_headers, so they also apply when only the
+# "site" folder is dragged onto Netlify Drop.
