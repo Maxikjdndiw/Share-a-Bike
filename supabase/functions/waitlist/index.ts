@@ -72,13 +72,13 @@ async function sendConfirmation(email: string, name: string, token: string) {
       textContent:
         `Hi ${name},\n\nplease confirm your email to join the ${SENDER_NAME} waitlist:\n${link}\n\n` +
         `If you did not sign up, just ignore this email. Unconfirmed sign ups are deleted after 7 days.\n\n` +
-        `${SENDER_NAME} · a student project at Schule Louisenlund`,
+        `${SENDER_NAME} · bike sharing at Schule Louisenlund`,
       htmlContent: `
         <div style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:480px;margin:0 auto;padding:32px 20px;color:#0B0B0C">
           <p style="font-size:22px;font-weight:700;letter-spacing:-.02em;margin:0 0 16px">Almost there, ${esc(name)}.</p>
           <p style="color:#5F5F64;line-height:1.55;margin:0 0 28px">Confirm your email to secure your spot on the ${esc(SENDER_NAME)} waitlist and your 2 free reservations.</p>
           <a href="${link}" style="display:inline-block;background:#0B0B0C;color:#fff;text-decoration:none;font-weight:600;padding:14px 26px;border-radius:999px">Confirm my email</a>
-          <p style="color:#8E8E93;font-size:13px;line-height:1.5;margin:28px 0 0">Didn't sign up? Just ignore this email. Unconfirmed sign ups are deleted after 7 days.<br>${esc(SENDER_NAME)} · a student project at Schule Louisenlund</p>
+          <p style="color:#8E8E93;font-size:13px;line-height:1.5;margin:28px 0 0">Didn't sign up? Just ignore this email. Unconfirmed sign ups are deleted after 7 days.<br>${esc(SENDER_NAME)} · bike sharing at Schule Louisenlund</p>
         </div>`,
     }),
   });
