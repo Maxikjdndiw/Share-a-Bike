@@ -7,7 +7,7 @@ window.SITE_CONFIG = {
      "Connect the sign up form"). Leave empty for DEMO MODE: the form then
      shows the thank-you message but stores nothing. Example:
      endpoint: "https://abcdefghijkl.supabase.co/functions/v1/waitlist", */
-  endpoint: "",
+  endpoint: "https://uayqeohiosnilsqldrgi.supabase.co/functions/v1/waitlist",
 
   /* Only these email domains may sign up (subdomains are allowed too, so
      "louisenlund.de" also accepts "name@mail.louisenlund.de").
