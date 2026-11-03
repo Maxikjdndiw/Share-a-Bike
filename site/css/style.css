@@ -475,6 +475,47 @@ input, select { caret-color: var(--accent-strong); accent-color: var(--accent-st
 .js .plan.reveal.is-in .price-line__path { stroke-dashoffset: 0; }
 .js .plan.reveal .price-line__area, .js .plan.reveal .price-line__dot, .js .plan.reveal .price-line__val { opacity: 0; transition: opacity 300ms var(--ease) 800ms; }
 .js .plan.reveal.is-in .price-line__area, .js .plan.reveal.is-in .price-line__dot, .js .plan.reveal.is-in .price-line__val { opacity: 1; }
+/* Price per 30-minute block inside each plan card */
+.rates { display: grid; gap: 2px; margin: 22px 0 6px; }
+.rates > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 9px 12px; border-radius: 10px; background: rgba(255,255,255,.6); }
+.plan--featured .rates > div { background: rgba(255,255,255,.7); }
+.rates dt { font-size: 14px; color: var(--ink-2); }
+.rates dd { margin: 0; font-size: 15px; font-weight: 650; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.rates dd.rates__tba { font-size: 13px; font-weight: 550; color: var(--ink-2); }
+.plan .list { margin-top: 18px; }
+.plan .price-chart { margin-top: 22px; }
+
+/* Below the plans: top-up credit, cheapest plan, rules */
+.pricing-more { margin-top: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.pricing-box { min-width: 0; padding: clamp(24px, 3.5vw, 36px); border-radius: var(--radius); background: var(--card); }
+.pricing-box--plain { background: transparent; padding-block: 8px; }
+.pricing-box__title { font-size: 18px; font-weight: 650; letter-spacing: -.02em; }
+.pricing-box__text { margin-top: 8px; font-size: 15px; color: var(--ink-2); max-width: 38em; }
+.pricing-box__note { margin-top: 14px; font-size: 13px; color: var(--ink-2); }
+
+.topup { margin-top: 18px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.topup li { position: relative; display: grid; gap: 2px; padding: 14px 16px; border-radius: 14px; background: var(--surface); }
+.topup b { font-size: 24px; font-weight: 750; letter-spacing: -.04em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.topup span { font-size: 14px; font-weight: 600; color: var(--ink); }
+.topup small { font-size: 13px; color: var(--ink-2); }
+.topup__best { background: var(--accent-soft) !important; }
+.topup__best small { color: var(--accent-strong); font-weight: 600; }
+.topup em { position: absolute; top: 12px; right: 12px; padding: 3px 8px; border-radius: 8px; background: var(--surface); font-size: 12px; font-style: normal; font-weight: 650; color: var(--accent-strong); }
+
+.compare-wrap { margin-top: 18px; overflow-x: auto; }
+.compare-plans { width: 100%; border-collapse: separate; border-spacing: 0 6px; font-size: 15px; font-variant-numeric: tabular-nums; }
+.compare-plans caption { caption-side: bottom; padding-top: 4px; text-align: left; font-size: 13px; color: var(--ink-2); }
+.compare-plans th, .compare-plans td { padding: 10px 12px; text-align: center; }
+.compare-plans thead th { padding-block: 4px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.compare-plans thead th:first-child, .compare-plans tbody th { text-align: left; }
+.compare-plans tbody th, .compare-plans tbody td { background: var(--surface); }
+.compare-plans tbody th { font-weight: 650; border-radius: 10px 0 0 10px; }
+.compare-plans tbody td:last-child { border-radius: 0 10px 10px 0; }
+.compare-plans td.is-best { background: var(--accent-soft); color: var(--accent-strong); font-weight: 750; }
+
+@media (max-width: 900px) { .pricing-more { grid-template-columns: 1fr; } }
+@media (max-width: 340px) { .topup { grid-template-columns: 1fr; } }
+
 .plans__note { margin-top: 24px; font-size: 15px; color: var(--ink-2); max-width: 44em; }
 @media (max-width: 900px) {
   .plans { grid-template-columns: 1fr; }

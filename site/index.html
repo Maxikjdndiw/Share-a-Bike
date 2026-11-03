@@ -144,10 +144,11 @@
         <a class="nav__link" href="#pricing" aria-haspopup="true" aria-expanded="false" aria-controls="menu-pricing">Pricing<svg class="nav__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="nav__menu" id="menu-pricing">
           <div class="nav__panel">
-            <a class="nav__sub" href="#plan-basic"><b>Basic · 15 € / month</b><span>Unlimited rides up to 60 minutes</span></a>
-            <a class="nav__sub" href="#plan-premium"><b>Premium · 22 € / month</b><span>Rides up to 2 hours, free reservations</span></a>
-            <a class="nav__sub" href="#plan-single"><b>Single ride · from 1 €</b><span>No subscription, see the price chart</span></a>
-            <a class="nav__sub" href="#lunch-rule"><b>Lunch break rule</b><span>Every lunch ride is about 30 minutes</span></a>
+            <a class="nav__sub" href="#plan-single"><b>Pay per ride · 0 € / month</b><span>From 2 € per ride, pay with credit</span></a>
+            <a class="nav__sub" href="#plan-basic"><b>Basic · 5 € / month</b><span>Rides from 1 €</span></a>
+            <a class="nav__sub" href="#plan-premium"><b>Premium · 12 € / month</b><span>Rides up to 45 minutes included</span></a>
+            <a class="nav__sub" href="#top-up"><b>Top-up credit</b><span>Up to 5 € extra credit</span></a>
+            <a class="nav__sub" href="#cheapest"><b>Which plan is cheapest?</b><span>Compare by rides per month</span></a>
           </div>
         </div>
       </div>
@@ -155,7 +156,7 @@
         <a class="nav__link" href="#owners" aria-haspopup="true" aria-expanded="false" aria-controls="menu-owners">For owners<svg class="nav__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="nav__menu" id="menu-owners">
           <div class="nav__panel">
-            <a class="nav__sub" href="#owner-benefits"><b>Benefits</b><span>Free Premium, worth 22 € a month</span></a>
+            <a class="nav__sub" href="#owner-benefits"><b>Benefits</b><span>Free Premium, worth 12 € a month</span></a>
             <a class="nav__sub" href="#owner-requirements"><b>Requirements</b><span>A safe, roadworthy bike with lights</span></a>
             <a class="nav__sub" href="#safety"><b>Safety and rules</b><span>GPS, weekly checks, helmets</span></a>
             <a class="nav__sub" href="#signup" data-role-select="lend"><b>Lend your bike</b><span>Join the waitlist as an owner</span></a>
@@ -576,17 +577,56 @@
   <section class="section" id="pricing">
     <div class="container">
       <h2 class="h2 reveal">Simple prices. No surprises.</h2>
-      <p class="lead reveal">Every plan lets you take a bike that's free right now. A reservation holds one for you in advance. Early sign ups get 2 free reservations.</p>
+      <p class="lead reveal">Pick the plan that fits how often you ride. Early sign ups get 2 free reservations.</p>
 
+      <!-- Prices for the Louisenlund pilot (decided 3 Nov 2026). Every price lives here and in
+           the "Which plan is cheapest?" table below. "To be announced" = not decided yet. -->
       <div class="plans">
+        <!-- Pay per ride -->
+        <article class="card plan reveal" id="plan-single">
+          <h3 class="plan__name">Pay per ride</h3>
+          <p class="plan__price"><b>0 €</b><span>/ month</span></p>
+          <p class="plan__desc">No subscription. Pay with top-up credit.</p>
+          <dl class="rates">
+            <div><dt>First 30 min</dt><dd>2 €</dd></div>
+            <div><dt>Second 30 min</dt><dd>3 €</dd></div>
+            <div><dt>Third 30 min</dt><dd>4 €</dd></div>
+            <div><dt>Reservation</dt><dd class="rates__tba">To be announced</dd></div>
+          </dl>
+          <!-- Pay per ride totals (line chart). Points: x = 24 / 144 / 264, y = 118 - price / 9 * 92. -->
+          <figure class="price-chart">
+            <figcaption class="price-chart__title">Total price by ride length</figcaption>
+            <svg class="price-line" viewBox="0 0 290 150" role="img" aria-label="Pay per ride totals: 30 minutes 2 euros, 1 hour 5 euros, 1.5 hours 9 euros.">
+              <line class="price-line__base" x1="10" y1="118" x2="280" y2="118"/>
+              <path class="price-line__area" d="M24 118 L24 97.6 L144 66.9 L264 26.0 L264 118 Z"/>
+              <path class="price-line__path" d="M24 97.6 L144 66.9 L264 26.0" pathLength="1"/>
+              <circle class="price-line__dot" cx="24" cy="97.6" r="5"><title>30 min: 2 €</title></circle>
+              <circle class="price-line__dot" cx="144" cy="66.9" r="5"><title>1 h: 5 €</title></circle>
+              <circle class="price-line__dot" cx="264" cy="26.0" r="5"><title>1.5 h: 9 €</title></circle>
+              <text class="price-line__val" x="24" y="85.6" text-anchor="middle">2 €</text>
+              <text class="price-line__val" x="144" y="54.900000000000006" text-anchor="middle">5 €</text>
+              <text class="price-line__val" x="264" y="14.0" text-anchor="middle">9 €</text>
+              <text class="price-line__x" x="24" y="142" text-anchor="middle">30 min</text>
+              <text class="price-line__x" x="144" y="142" text-anchor="middle">1 h</text>
+              <text class="price-line__x" x="264" y="142" text-anchor="middle">1.5 h</text>
+            </svg>
+          </figure>
+          <a class="btn btn--outline btn--block" href="#signup" data-role-select="ride">Join the waitlist</a>
+        </article>
+
         <!-- Basic -->
         <article class="card plan reveal" id="plan-basic">
           <h3 class="plan__name">Basic</h3>
-          <p class="plan__price"><b>15 €</b><span>/ month</span></p>
-          <p class="plan__desc">One fixed price for short everyday trips.</p>
+          <p class="plan__price"><b>5 €</b><span>/ month</span></p>
+          <p class="plan__desc">A small monthly fee for cheaper rides.</p>
+          <dl class="rates">
+            <div><dt>First 30 min</dt><dd>1 €</dd></div>
+            <div><dt>Second 30 min</dt><dd>1.50 €</dd></div>
+            <div><dt>Third 30 min</dt><dd>2.50 €</dd></div>
+            <div><dt>Reservation</dt><dd>0.50 € each</dd></div>
+          </dl>
           <ul class="list">
-            <li><svg><use href="#i-check"/></svg>Unlimited rides, up to 60 minutes each</li>
-            <li><svg><use href="#i-check"/></svg>Reserve ahead for 1 € per reservation</li>
+            <li><svg><use href="#i-check"/></svg>Pay at the end of the month, with a friendly reminder</li>
           </ul>
           <a class="btn btn--outline btn--block" href="#signup" data-role-select="ride">Join the waitlist</a>
         </article>
@@ -595,51 +635,64 @@
         <article class="card plan plan--featured reveal" id="plan-premium">
           <p class="plan__badge">Best for regular riders</p>
           <h3 class="plan__name">Premium</h3>
-          <p class="plan__price"><b>22 €</b><span>/ month</span></p>
-          <p class="plan__desc">For everyone who rides every week.</p>
+          <p class="plan__price"><b>12 €</b><span>/ month</span></p>
+          <p class="plan__desc">Rides up to 45 minutes included.</p>
+          <dl class="rates">
+            <div><dt>Rides up to 45 min</dt><dd>Included</dd></div>
+            <div><dt>Over 45 min</dt><dd class="rates__tba">To be announced</dd></div>
+            <div><dt>Reservations</dt><dd>4 free per month</dd></div>
+            <div><dt>More reservations</dt><dd>At a discount</dd></div>
+          </dl>
           <ul class="list">
-            <li><svg><use href="#i-check"/></svg>Unlimited rides, up to 2 hours each</li>
-            <li><svg><use href="#i-check"/></svg>Free reservations, up to 2 hours ahead</li>
-            <li><svg><use href="#i-check"/></svg>2 free guest rides per month</li>
-            <li><svg><use href="#i-check"/></svg>Priority on the best bikes</li>
-            <li><svg><use href="#i-check"/></svg><span>Free soft drink at the supermarket after every 4 rides <span class="pill-note">Planned</span></span></li>
+            <li><svg><use href="#i-check"/></svg>Partner perks, for example credit at EDEKA Paasch</li>
           </ul>
           <a class="btn btn--dark btn--block" href="#signup" data-role-select="ride">Join the waitlist</a>
         </article>
-
-        <!-- Single ride -->
-        <article class="card plan reveal" id="plan-single">
-          <h3 class="plan__name">Single ride</h3>
-          <p class="plan__price"><b>1 €</b><span>/ first 30 min</span></p>
-          <p class="plan__desc">No subscription. Short trips stay cheap; every extra half hour costs more.</p>
-          <ul class="list">
-            <li><svg><use href="#i-check"/></svg>No monthly fee</li>
-          </ul>
-          <!-- Single ride price chart (line). To change prices, edit the four points:
-               x = 24 / 104 / 184 / 264, y = 118 - price / 12 * 92. -->
-          <figure class="price-chart">
-            <figcaption class="price-chart__title">Total price by ride length</figcaption>
-            <svg class="price-line" viewBox="0 0 290 150" role="img" aria-label="Single ride totals: 30 minutes 1 euro, 1 hour 3 euros, 1.5 hours 6 euros, 2 hours 12 euros.">
-              <line class="price-line__base" x1="10" y1="118" x2="280" y2="118"/>
-              <path class="price-line__area" d="M24 118 L24 110.3 L104 95.0 L184 72.0 L264 26.0 L264 118 Z"/>
-              <path class="price-line__path" d="M24 110.3 L104 95.0 L184 72.0 L264 26.0" pathLength="1"/>
-              <circle class="price-line__dot" cx="24" cy="110.3" r="5"><title>30 min: 1 €</title></circle>
-              <circle class="price-line__dot" cx="104" cy="95.0" r="5"><title>1 h: 3 €</title></circle>
-              <circle class="price-line__dot" cx="184" cy="72.0" r="5"><title>1.5 h: 6 €</title></circle>
-              <circle class="price-line__dot" cx="264" cy="26.0" r="5"><title>2 h: 12 €</title></circle>
-              <text class="price-line__val" x="24" y="98.3" text-anchor="middle">1 €</text>
-              <text class="price-line__val" x="104" y="83.0" text-anchor="middle">3 €</text>
-              <text class="price-line__val" x="184" y="60.0" text-anchor="middle">6 €</text>
-              <text class="price-line__val" x="264" y="14.0" text-anchor="middle">12 €</text>
-              <text class="price-line__x" x="24" y="142" text-anchor="middle">30 min</text>
-              <text class="price-line__x" x="104" y="142" text-anchor="middle">1 h</text>
-              <text class="price-line__x" x="184" y="142" text-anchor="middle">1.5 h</text>
-              <text class="price-line__x" x="264" y="142" text-anchor="middle">2 h</text>
-            </svg>
-          </figure>
-          <a class="btn btn--outline btn--block" href="#signup" data-role-select="ride">Join the waitlist</a>
-        </article>
       </div>
+
+      <div class="pricing-more">
+        <!-- Top-up credit (pay per ride) -->
+        <div class="pricing-box reveal" id="top-up">
+          <h3 class="pricing-box__title">Top up, get more</h3>
+          <p class="pricing-box__text">Pay per ride works with credit. The more you top up, the more you get.</p>
+          <ul class="topup">
+            <li><b>5 €</b><span>5 € credit</span><small>Minimum top-up</small></li>
+            <li><b>10 €</b><span>11 € credit</span><small>1 € extra</small></li>
+            <li><b>20 €</b><span>23 € credit</span><small>3 € extra</small></li>
+            <li class="topup__best"><em>Best deal</em><b>30 €</b><span>35 € credit</span><small>5 € extra and 1 free reservation</small></li>
+          </ul>
+          <p class="pricing-box__note">Credit and bonus never expire. Credit is only for rides and can't be paid out.</p>
+        </div>
+
+        <!-- Which plan is cheapest? (rides under 30 min, per month) -->
+        <div class="pricing-box reveal" id="cheapest">
+          <h3 class="pricing-box__title">Which plan is cheapest?</h3>
+          <p class="pricing-box__text">Pay per ride is cheapest up to about 5 rides a month, Basic fits 5 to 7 rides, and Premium is cheapest from about 7 to 8 rides.</p>
+          <div class="compare-wrap">
+            <table class="compare-plans">
+              <caption>Monthly cost for rides under 30 minutes</caption>
+              <thead><tr><th scope="col">Rides a month</th><th scope="col">Pay per ride</th><th scope="col">Basic</th><th scope="col">Premium</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">4</th><td class="is-best">8 €</td><td>9 €</td><td>12 €</td></tr>
+                <tr><th scope="row">8</th><td>16 €</td><td>13 €</td><td class="is-best">12 €</td></tr>
+                <tr><th scope="row">12</th><td>24 €</td><td>17 €</td><td class="is-best">12 €</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="pricing-box__note">Reservation fees are not included.</p>
+        </div>
+
+        <!-- Rules -->
+        <div class="pricing-box pricing-box--plain reveal" id="ride-rules">
+          <h3 class="pricing-box__title">How a ride is counted</h3>
+          <p class="pricing-box__text">A ride counts from taking the bike at the station until you return it. Stops in between don't matter. With pay per ride, each further 30 minutes costs about 1 € more than the one before.</p>
+        </div>
+        <div class="pricing-box pricing-box--plain reveal" id="reservations">
+          <h3 class="pricing-box__title">Reservations with Basic</h3>
+          <p class="pricing-box__text">Book up to 30 minutes ahead. A reservation expires 5 minutes after the booked time, and a no-show still pays the 0.50 € fee. Walk-up rides without a reservation cost nothing extra.</p>
+        </div>
+      </div>
+
       <p class="plans__note reveal" id="lunch-rule">During lunch break every ride is about 30 minutes, whatever your plan, so the next student gets a bike and everyone is back for class.</p>
     </div>
   </section>
@@ -654,7 +707,7 @@
 
       <div class="owner-card reveal">
         <div class="owner-card__main">
-          <p class="owner-card__worth"><b>Free Premium</b><span>worth 22 € a month</span></p>
+          <p class="owner-card__worth"><b>Free Premium</b><span>worth 12 € a month</span></p>
           <ul class="list list--lg" id="owner-benefits">
             <li><svg><use href="#i-check"/></svg>Your bike stays on campus</li>
             <li><svg><use href="#i-check"/></svg>You choose when it is available</li>
@@ -858,7 +911,7 @@
         </details>
         <details>
           <summary>How do I pay?<svg><use href="#i-plus"/></svg></summary>
-          <p>By card or bank transfer through a payment provider. We never store your card details ourselves.</p>
+          <p>Pay per ride uses top-up credit. With Basic, rides are paid at the end of the month. Payments go through a payment provider by card or bank transfer, and we never store your card details ourselves.</p>
         </details>
         <details>
           <summary>Is my data safe?<svg><use href="#i-plus"/></svg></summary>
