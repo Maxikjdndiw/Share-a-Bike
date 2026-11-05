@@ -66,8 +66,8 @@
     <filter id="liquid-glass" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
       <!-- Displacement map: neutral grey in the middle, strong at the rounded edges -->
       <feImage id="liquid-glass-map" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map"/>
-      <!-- Light blur so text behind the glass softens a little -->
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" result="soft"/>
+      <!-- Blur so text scrolling behind the glass never competes with the nav labels -->
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.4" result="soft"/>
       <!-- Refract each colour channel by a slightly different amount = chromatic aberration -->
       <feDisplacementMap in="soft" in2="map" scale="24" xChannelSelector="R" yChannelSelector="G" result="dispR"/>
       <feDisplacementMap in="soft" in2="map" scale="22" xChannelSelector="R" yChannelSelector="G" result="dispG"/>
@@ -285,7 +285,7 @@
       <p class="hero__sub reveal">Student bike sharing at Schule Louisenlund. Borrow a bike in seconds, back before the bell.</p>
       <div class="hero__actions reveal">
         <a class="btn btn--dark btn--lg" href="#signup" data-role-select="ride">I want to ride</a>
-        <a class="btn btn--outline btn--lg" href="#signup" data-role-select="lend">I want to lend my bike</a>
+        <a class="btn btn--outline btn--lg lg-blur" href="#signup" data-role-select="lend" data-glass>I want to lend my bike</a>
       </div>
       <p class="hero__meta reveal">Pilot launch January 2027</p>
     </div>
@@ -294,8 +294,8 @@
     <div class="container">
       <div class="hero__visual reveal">
         <svg class="scene" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-          <rect width="1200" height="720" fill="#DCEAFF"/>
-          <circle cx="1010" cy="140" r="78" fill="#FFD36B"/>
+          <rect width="1200" height="720" style="fill: var(--sky-soft)"/>
+          <circle cx="1010" cy="140" r="78" style="fill: var(--sun)"/>
           <g fill="#fff">
             <rect x="120" y="96" width="190" height="44" rx="22"/><rect x="170" y="70" width="90" height="50" rx="25"/>
             <rect x="760" y="150" width="150" height="36" rx="18"/>
@@ -323,8 +323,8 @@
           <!-- bikes (colour per bike) -->
           <g>
             <use href="#i-bike" x="230" y="470" width="150" height="95" color="#0B0B0C"/>
-            <use href="#i-bike" x="372" y="470" width="150" height="95" color="#4F7CFF"/>
-            <use href="#i-bike" x="690" y="470" width="150" height="95" color="#FFB020"/>
+            <use href="#i-bike" x="372" y="470" width="150" height="95" style="color: var(--sky-mark)"/>
+            <use href="#i-bike" x="690" y="470" width="150" height="95" style="color: var(--sun)"/>
             <use href="#i-bike" x="832" y="470" width="150" height="95" color="#5DCAA5"/>
           </g>
         </svg>
@@ -367,12 +367,12 @@
                 <p class="app__title">Book a bike</p>
                 <div class="chips"><span class="chip chip--on">Now</span><span class="chip">12:45</span><span class="chip">13:00</span></div>
                 <div class="bike-item bike-item--on">
-                  <span class="bike-item__icon" style="color:#4F7CFF"><svg><use href="#i-bike"/></svg></span>
+                  <span class="bike-item__icon" style="color: var(--sky-mark)"><svg><use href="#i-bike"/></svg></span>
                   <span class="bike-item__body"><b>City bike #07</b><small>3 gears · lights · basket</small></span>
                   <span class="tag tag--ok">Free</span>
                 </div>
                 <div class="bike-item">
-                  <span class="bike-item__icon" style="color:#2BB673"><svg><use href="#i-bike"/></svg></span>
+                  <span class="bike-item__icon" style="color: var(--mint-mark)"><svg><use href="#i-bike"/></svg></span>
                   <span class="bike-item__body"><b>Trekking #03</b><small>7 gears · lights</small></span>
                   <span class="tag tag--ok">Free</span>
                 </div>
@@ -489,12 +489,12 @@
                   <p class="app__eyebrow">School Station</p>
                   <p class="app__title">4 bikes free</p>
                   <div class="bike-item bike-item--on">
-                    <span class="bike-item__icon" style="color:#4F7CFF"><svg><use href="#i-bike"/></svg></span>
+                    <span class="bike-item__icon" style="color: var(--sky-mark)"><svg><use href="#i-bike"/></svg></span>
                     <span class="bike-item__body"><b>City bike #07</b><small>3 gears · lights</small></span>
                     <span class="tag tag--ok">Free</span>
                   </div>
                   <div class="bike-item">
-                    <span class="bike-item__icon" style="color:#2BB673"><svg><use href="#i-bike"/></svg></span>
+                    <span class="bike-item__icon" style="color: var(--mint-mark)"><svg><use href="#i-bike"/></svg></span>
                     <span class="bike-item__body"><b>Trekking #03</b><small>7 gears · lights</small></span>
                     <span class="tag tag--ok">Free</span>
                   </div>
@@ -544,7 +544,7 @@
                     <rect x="160" y="200" width="50" height="70" rx="8" fill="#E3E9F7"/>
                     <path d="M45 250 V190 H150 V70 H178" fill="none" stroke="#5DCAA5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
                     <circle cx="45" cy="250" r="8" fill="#0B0B0C"/><circle cx="45" cy="250" r="3" fill="#fff"/>
-                    <circle cx="150" cy="140" r="9" fill="#4F7CFF" stroke="#fff" stroke-width="4"/>
+                    <circle cx="150" cy="140" r="9" style="fill: var(--sky-mark)" stroke="#fff" stroke-width="4"/>
                     <circle cx="178" cy="70" r="8" fill="#5DCAA5"/><circle cx="178" cy="70" r="3" fill="#fff"/>
                   </svg>
                   <span class="mapview__label mapview__label--b">Paasch · 3 min</span>
@@ -1071,7 +1071,7 @@
         <div>
           <h4>Legal</h4>
           <a href="impressum.html">Impressum</a>
-          <a href="datenschutz.html">Datenschutzerklärung</a>
+          <a href="datenschutz.html" lang="de">Datenschutzerklärung</a>
           <a href="cookies.html">Cookies</a>
         </div>
         <div>

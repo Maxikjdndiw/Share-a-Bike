@@ -145,3 +145,42 @@
   });
   nav.addEventListener("pointerleave", function () { nav.classList.remove("is-hovering"); });
 })();
+
+/* ==========================================================================
+   Specular highlight that follows the pointer
+   Every glass surface draws its highlight at var(--mx) var(--my) (see
+   section 10 in style.css). One passive pointermove listener on the page,
+   at most one style write per frame, and only on devices with a real hover
+   pointer. Off when the user prefers reduced motion.
+   ========================================================================== */
+(function () {
+  "use strict";
+  var mq = window.matchMedia;
+  if (!mq || !mq("(hover: hover) and (pointer: fine)").matches) return;
+  if (mq("(prefers-reduced-motion: reduce)").matches) return;
+
+  var SURFACES = ".lg, .btn--dark, .btn--outline, .card, .planner, .pricing-box, .owner-card, .safety li, " +
+    ".signup, .signup__formwrap, .faq details, .team li, .parents li, .owner-draft__options li, .topup li, " +
+    ".feature-btn, .plan__badge, .badge, .cost-slider__plans li, .owner-illu";
+
+  var current = null, x = 0, y = 0, queued = false;
+
+  function paint() {
+    queued = false;
+    if (!current) return;
+    var r = current.getBoundingClientRect();
+    current.style.setProperty("--mx", (x - r.left).toFixed(0) + "px");
+    current.style.setProperty("--my", (y - r.top).toFixed(0) + "px");
+  }
+  function reset(el) { el.style.removeProperty("--mx"); el.style.removeProperty("--my"); }
+
+  document.addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse") return;
+    var el = e.target.closest ? e.target.closest(SURFACES) : null;
+    if (el !== current) { if (current) reset(current); current = el; }
+    if (!el) return;
+    x = e.clientX; y = e.clientY;
+    if (!queued) { queued = true; requestAnimationFrame(paint); }
+  }, { passive: true });
+  document.addEventListener("pointerleave", function () { if (current) reset(current); current = null; }, { passive: true });
+})();
