@@ -90,7 +90,7 @@
      to screen readers). The email is also checked when you leave the field. */
   var summary = form && $(".form__error", form);
   var thanks = $("#signup-thanks");
-  var EXAMPLE = CONFIG.emailExample || "name@mail.louisenlund.de";
+  var EXAMPLE = CONFIG.emailExample || "name@example.com";
 
   function isSchoolEmail(email) {
     var domains = CONFIG.schoolEmailDomains || [];
@@ -102,7 +102,7 @@
   }
 
   function emailProblem(email) {
-    if (!email) return "Please enter your school email.";
+    if (!email) return "Please enter your email address.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "That doesn't look like an email address. Example: " + EXAMPLE;
     if (!isSchoolEmail(email)) return "Please use your school email, like " + EXAMPLE;
     return "";

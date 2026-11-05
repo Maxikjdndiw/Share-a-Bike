@@ -9,13 +9,14 @@ window.SITE_CONFIG = {
      endpoint: "https://abcdefghijkl.supabase.co/functions/v1/waitlist", */
   endpoint: "https://uayqeohiosnilsqldrgi.supabase.co/functions/v1/waitlist",
 
-  /* Only these email domains may sign up (subdomains are allowed too, so
-     "louisenlund.de" also accepts "name@mail.louisenlund.de").
-     The backend checks this again, this is only for instant feedback. */
-  schoolEmailDomains: ["louisenlund.de"],
+  /* Which email domains may sign up. Empty list = every email address.
+     To limit it again, e.g. ["louisenlund.de"] (subdomains count too).
+     The backend checks this again (secret ALLOWED_DOMAINS); this is only
+     for instant feedback. */
+  schoolEmailDomains: [],
 
   /* Example address shown in hints and error messages */
-  emailExample: "name@mail.louisenlund.de",
+  emailExample: "name@example.com",
 
   /* Waitlist goals shown next to the live counter */
   goals: { riders: 50, owners: 15 },

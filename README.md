@@ -85,7 +85,7 @@ supabase link --project-ref YOUR_PROJECT_REF
 (The project ref is the part before `.supabase.co` in your project URL, shown under *Project Settings → General*.)
 
 ```bash
-supabase secrets set SITE_URL=https://your-site.netlify.app ALLOWED_DOMAINS=louisenlund.de BREVO_API_KEY=xkeysib-... SENDER_EMAIL=you@example.com SENDER_NAME="Share a Bike"
+supabase secrets set SITE_URL=https://your-site.netlify.app ALLOWED_DOMAINS=* BREVO_API_KEY=xkeysib-... SENDER_EMAIL=you@example.com SENDER_NAME="Share a Bike"
 ```
 
 ```bash
@@ -113,7 +113,7 @@ If something fails: Supabase dashboard → **Edge Functions → waitlist → Log
 
 - ✅ No cookies, no tracking, no Google Analytics, no Google Fonts, no external scripts (enforced by the Content-Security-Policy in `netlify.toml`).
 - ✅ Font is self-hosted in `site/fonts`.
-- ✅ Minimal data: first name, school email, class, role, bike type (owners only), consent timestamps. No IP addresses are stored.
+- ✅ Minimal data: first name, email, class, role, bike type (owners only), consent timestamps. No IP addresses are stored.
 - ✅ Double opt-in. Confirmation tokens are stored only as hashes. Unconfirmed rows are deleted after 7 days (pg_cron, step 1.3).
 - ✅ Database not readable with public keys (Row Level Security, no policies).
 - ⚠️ Fill in `impressum.html` and `datenschutz.html` and have a teacher or the school check them. Sign the data processing agreements (DPA / AVV) with Supabase and Brevo (both offer them in their dashboards).

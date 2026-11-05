@@ -8,7 +8,8 @@
 //
 // Secrets (set with `supabase secrets set NAME=value`, see README):
 //   SITE_URL          e.g. https://your-site.netlify.app   (no trailing slash)
-//   ALLOWED_DOMAINS   e.g. louisenlund.de                  (comma separated)
+//   ALLOWED_DOMAINS   optional. "*" or not set = every email address may sign up;
+//                     e.g. louisenlund.de to allow only those (comma separated)
 //   BREVO_API_KEY     API key from brevo.com (free plan: 300 emails/day)
 //   SENDER_EMAIL      a sender address you verified in Brevo
 //   SENDER_NAME       e.g. Share a Bike
@@ -17,8 +18,9 @@
 import { createClient } from "npm:@supabase/supabase-js@2.45.4";
 
 const SITE_URL = (Deno.env.get("SITE_URL") ?? "").replace(/\/$/, "");
-const ALLOWED_DOMAINS = (Deno.env.get("ALLOWED_DOMAINS") ?? "louisenlund.de")
-  .split(",").map((d) => d.trim().toLowerCase()).filter(Boolean);
+// "*" or empty = no restriction
+const ALLOWED_DOMAINS = (Deno.env.get("ALLOWED_DOMAINS") ?? "*")
+  .split(",").map((d) => d.trim().toLowerCase()).filter((d) => d && d !== "*");
 const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY") ?? "";
 const SENDER_EMAIL = Deno.env.get("SENDER_EMAIL") ?? "";
 const SENDER_NAME = Deno.env.get("SENDER_NAME") ?? "Share a Bike";
@@ -54,6 +56,7 @@ async function sha256(text: string) {
 }
 
 function isSchoolEmail(email: string) {
+  if (!ALLOWED_DOMAINS.length) return true; // open to every email address
   const host = email.split("@")[1] ?? "";
   return ALLOWED_DOMAINS.some((d) => host === d || host.endsWith("." + d));
 }
@@ -133,7 +136,7 @@ Deno.serve(async (req) => {
 
   if (!name || !class_year) return json(req, { error: "Please fill in all fields." }, 400);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json(req, { error: "Please enter a valid email address." }, 400);
-  if (!isSchoolEmail(email)) return json(req, { error: "Please use your school email address." }, 400);
+  if (!isSchoolEmail(email)) return json(req, { error: "Sign-ups are limited to certain email addresses. Please use your school email." }, 400);
   if (!["ride", "lend", "both"].includes(role)) return json(req, { error: "Please choose ride, lend or both." }, 400);
   if (bike_type !== null && !["city", "trekking", "mountain", "road", "other"].includes(bike_type)) {
     return json(req, { error: "Please choose your bike type." }, 400);
