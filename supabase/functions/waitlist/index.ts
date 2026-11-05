@@ -133,11 +133,16 @@ Deno.serve(async (req) => {
   const class_year = String(body.class_year ?? "").trim().slice(0, 20);
   const role = String(body.role ?? "");
   const bike_type = role === "ride" ? null : String(body.bike_type ?? "");
+  // optional: a parent's email for riders under 18 (needs migration 0002_parent_email.sql)
+  const parent_email = String(body.parent_email ?? "").trim().toLowerCase().slice(0, 120) || null;
 
   if (!name || !class_year) return json(req, { error: "Please fill in all fields." }, 400);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json(req, { error: "Please enter a valid email address." }, 400);
   if (!isSchoolEmail(email)) return json(req, { error: "Sign-ups are limited to certain email addresses. Please use your school email." }, 400);
   if (!["ride", "lend", "both"].includes(role)) return json(req, { error: "Please choose ride, lend or both." }, 400);
+  if (parent_email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(parent_email)) {
+    return json(req, { error: "Please check the parent's email address." }, 400);
+  }
   if (bike_type !== null && !["city", "trekking", "mountain", "road", "other"].includes(bike_type)) {
     return json(req, { error: "Please choose your bike type." }, 400);
   }
@@ -159,7 +164,7 @@ Deno.serve(async (req) => {
   const token = crypto.randomUUID();
   const now = new Date().toISOString();
   const row = {
-    name, email, class_year, role, bike_type,
+    name, email, class_year, role, bike_type, parent_email,
     age_confirmed: true,
     privacy_accepted_at: now,
     confirm_token_hash: await sha256(token),

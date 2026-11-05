@@ -17,19 +17,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-  <title>Share a Bike · Student bike sharing at Schule Louisenlund</title>
+  <title>Share a Bike · Bike sharing at Schule Louisenlund</title>
   <meta name="description" content="Peer-to-peer bike sharing for students at Schule Louisenlund. Borrow a bike from the school station in seconds. Join the waitlist for the pilot in January 2027.">
   <meta name="theme-color" content="#FBFBFA">
 
-  <!-- Open Graph / WhatsApp preview.
-       IMPORTANT: og:image and og:url must be ABSOLUTE URLs. Replace
-       https://your-site.netlify.app with your real domain after deploying. -->
+  <!-- Open Graph / WhatsApp preview. og:image and og:url must be ABSOLUTE URLs.
+       Change https://shareabike.netlify.app here (and in de.html) if you move to your own domain. -->
+  <link rel="alternate" hreflang="en" href="https://shareabike.netlify.app/">
+  <link rel="alternate" hreflang="de" href="https://shareabike.netlify.app/de.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Share a Bike">
-  <meta property="og:title" content="Share a Bike · Just ride.">
+  <meta property="og:title" content="Share a Bike · Bike sharing at Schule Louisenlund">
   <meta property="og:description" content="Borrow a bike from school in seconds. Back before the bell. Join the waitlist: early sign ups get 2 free reservations.">
-  <meta property="og:url" content="https://your-site.netlify.app/">
-  <meta property="og:image" content="https://your-site.netlify.app/img/og-image.png">
+  <meta property="og:url" content="https://shareabike.netlify.app/">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:image" content="https://shareabike.netlify.app/img/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Share a Bike: Just ride. A student bike sharing pilot at Schule Louisenlund.">
@@ -146,7 +148,7 @@
           <div class="nav__panel">
             <a class="nav__sub" href="#plan-single"><b>Pay per ride · 0 € / month</b><span>From 2 € per ride, pay with credit</span></a>
             <a class="nav__sub" href="#plan-basic"><b>Basic · 5 € / month</b><span>Rides from 1 €</span></a>
-            <a class="nav__sub" href="#plan-premium"><b>Premium · 12 € / month</b><span>Rides up to 45 minutes included</span></a>
+            <a class="nav__sub" href="#plan-premium"><b>Premium · 12 € / month</b><span>4 free reservations a month and perks</span></a>
             <a class="nav__sub" href="#top-up"><b>Top-up credit</b><span>Up to 5 € extra credit</span></a>
             <a class="nav__sub" href="#cheapest"><b>Which plan is cheapest?</b><span>Compare by rides per month</span></a>
           </div>
@@ -163,8 +165,12 @@
           </div>
         </div>
       </div>
+      <div class="nav__item">
+        <a class="nav__link" href="#parents">For parents</a>
+      </div>
     </nav>
 
+    <a class="lang-toggle" href="de.html" hreflang="de" lang="de" aria-label="Deutsche Version">DE</a>
     <a class="btn btn--dark btn--sm header__cta" href="#signup" data-role-select="ride">
       <span class="hide-xs">Join the waitlist</span><span class="show-xs">Join</span>
     </a>
@@ -178,7 +184,9 @@
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
     <a href="#owners">For owners</a>
+    <a href="#parents">For parents</a>
     <a href="#faq">FAQ</a>
+    <a class="mobile-menu__lang" href="de.html" hreflang="de" lang="de">Deutsch</a>
   </nav>
 </header>
 
@@ -406,10 +414,10 @@
   <section class="ticker" aria-label="Why you can trust Share a Bike">
     <div class="ticker__track">
       <ul class="ticker__list">
-        <li>GPS tracked</li><li>Checked every week</li><li>Helmet required</li><li>No account needed</li><li>Data deleted after 30 days</li><li>Run by students</li>
+        <li>GPS tracked</li><li>Checked every week</li><li>Helmet required</li><li>No password, sign up in seconds</li><li>Data deleted after 30 days</li><li>Run by students</li>
       </ul>
       <ul class="ticker__list" aria-hidden="true">
-        <li>GPS tracked</li><li>Checked every week</li><li>Helmet required</li><li>No account needed</li><li>Data deleted after 30 days</li><li>Run by students</li>
+        <li>GPS tracked</li><li>Checked every week</li><li>Helmet required</li><li>No password, sign up in seconds</li><li>Data deleted after 30 days</li><li>Run by students</li>
       </ul>
     </div>
   </section>
@@ -580,7 +588,7 @@
       <p class="lead reveal">Pick the plan that fits how often you ride. Early sign ups get 2 free reservations.</p>
 
       <!-- Prices for the Louisenlund pilot (decided 3 Nov 2026). Every price lives here and in
-           the "Which plan is cheapest?" table below. "To be announced" = not decided yet. -->
+           the "Which plan is cheapest?" slider and table below. [TODO: ...] = to be filled in by the founders. -->
       <div class="plans">
         <!-- Pay per ride -->
         <article class="card plan reveal" id="plan-single">
@@ -591,7 +599,7 @@
             <div><dt>First 30 min</dt><dd>2 €</dd></div>
             <div><dt>Second 30 min</dt><dd>3 €</dd></div>
             <div><dt>Third 30 min</dt><dd>4 €</dd></div>
-            <div><dt>Reservation</dt><dd class="rates__tba">To be announced</dd></div>
+            <div><dt>Reservation</dt><dd><span class="todo">[TODO: confirm price]</span> <small class="rates__pilot">pilot price</small></dd></div>
           </dl>
           <!-- Pay per ride totals (line chart). Points: x = 24 / 144 / 264, y = 118 - price / 9 * 92. -->
           <figure class="price-chart">
@@ -636,16 +644,19 @@
           <p class="plan__badge">Best for regular riders</p>
           <h3 class="plan__name">Premium</h3>
           <p class="plan__price"><b>12 €</b><span>/ month</span></p>
-          <p class="plan__desc">Rides up to 45 minutes included.</p>
+          <p class="plan__desc">Free reservations and partner perks.</p>
           <dl class="rates">
-            <div><dt>Rides up to 45 min</dt><dd>Included</dd></div>
-            <div><dt>Over 45 min</dt><dd class="rates__tba">To be announced</dd></div>
             <div><dt>Reservations</dt><dd>4 free per month</dd></div>
             <div><dt>More reservations</dt><dd>At a discount</dd></div>
           </dl>
           <ul class="list">
             <li><svg><use href="#i-check"/></svg>Partner perks, for example credit at EDEKA Paasch</li>
           </ul>
+          <dl class="rates rates--after">
+            <div><dt>Rides up to 45 min</dt><dd>Included</dd></div>
+            <div><dt>Over 45 min</dt><dd><span class="todo">[TODO: confirm price]</span> <small class="rates__pilot">pilot price</small></dd></div>
+          </dl>
+          <p class="plan__note">Lunch rides are about 30 minutes, whatever your plan.</p>
           <a class="btn btn--dark btn--block" href="#signup" data-role-select="ride">Join the waitlist</a>
         </article>
       </div>
@@ -668,7 +679,23 @@
         <div class="pricing-box reveal" id="cheapest">
           <h3 class="pricing-box__title">Which plan is cheapest?</h3>
           <p class="pricing-box__text">Pay per ride is cheapest up to about 5 rides a month, Basic fits 5 to 7 rides, and Premium is cheapest from about 7 to 8 rides.</p>
-          <div class="compare-wrap">
+          <!-- Slider (js/main.js, "Cost slider"): monthly cost by rides per month.
+               Pay per ride 2 € per ride, Basic 5 € + 1 € per ride, Premium 12 € flat.
+               Rides under 30 minutes, reservation fees not included. Hidden without JS. -->
+          <div class="cost-slider" data-cost-slider hidden>
+            <div class="cost-slider__head">
+              <label class="cost-slider__label" for="rides-n">Rides per month</label>
+              <output class="cost-slider__value" id="rides-out" for="rides-n" data-rides>8</output>
+            </div>
+            <input class="planner__range" id="rides-n" type="range" min="1" max="20" step="1" value="8">
+            <ul class="cost-slider__plans">
+              <li data-plan="ppr"><span class="cost-slider__name">Pay per ride</span><span class="cost-slider__track"><i></i></span><b data-cost="ppr">16 €</b></li>
+              <li data-plan="basic"><span class="cost-slider__name">Basic</span><span class="cost-slider__track"><i></i></span><b data-cost="basic">13 €</b></li>
+              <li data-plan="premium"><span class="cost-slider__name">Premium</span><span class="cost-slider__track"><i></i></span><b data-cost="premium">12 €</b></li>
+            </ul>
+            <p class="cost-slider__best" aria-live="polite">Cheapest: <b data-best>Premium</b></p>
+          </div>
+          <div class="compare-wrap" data-cost-table>
             <table class="compare-plans">
               <caption>Monthly cost for rides under 30 minutes</caption>
               <thead><tr><th scope="col">Rides a month</th><th scope="col">Pay per ride</th><th scope="col">Basic</th><th scope="col">Premium</th></tr></thead>
@@ -741,6 +768,17 @@
           </div>
         </div>
       </div>
+      <!-- DRAFT owner offer options: pick one (or none) and delete the rest. -->
+      <div class="owner-draft reveal" id="owner-offer">
+        <p class="draft-tag">Draft, not final</p>
+        <h3 class="owner-draft__title">More for owners</h3>
+        <ul class="owner-draft__options">
+          <li><b>Credit per ride</b><span>Every ride on your bike earns you <span class="todo">[TODO: amount]</span> credit.</span></li>
+          <li><b>Early owner bonus</b><span>The first 15 owners get <span class="todo">[TODO: bonus]</span>.</span></li>
+          <li><b>End of pilot service</b><span>Your bike gets <span class="todo">[TODO: confirm, for example a free service when the pilot ends]</span>.</span></li>
+        </ul>
+        <p class="owner-draft__note"><b>If your bike is damaged beyond repair:</b> <span class="todo">[TODO: confirm what the owner gets]</span></p>
+      </div>
     </div>
   </section>
 
@@ -778,23 +816,19 @@
           <h2 class="h2 h2--sm">Get on the list.</h2>
           <p class="lead">Be first when we launch in January 2027. Early sign ups get 2 free reservations.</p>
 
-          <!-- Counter (js/main.js, section 5). Until CONFIG.showCountFrom people have
-               confirmed, it shows the goal; after that the live numbers. -->
+          <!-- Counter (js/main.js, section 5): confirmed sign-ups from the backend.
+               Starts at 0, so the page also looks right without JS or if loading fails. -->
           <div class="counter" data-counter>
-            <div class="counter__goal" data-counter-goal>
-              <p class="counter__headline">50 riders. 15 bikes.</p>
-              <p class="counter__text">That's what we need to start the pilot in January 2027. Be one of them.</p>
-            </div>
-            <div class="counter__live" data-counter-live hidden>
-            <p class="counter__total"><b data-count="total">–</b> <span>students already on the list</span></p>
+            <p class="counter__headline">50 riders. 15 bikes.</p>
+            <p class="counter__text">That's what we need to start the pilot in January 2027. Be one of them.</p>
+            <p class="counter__total"><b data-count="total">0</b> <span>confirmed sign-ups so far</span></p>
             <div class="goal">
-              <div class="goal__row"><span>Riders</span><span><b data-count="riders">–</b> / <span data-goal="riders">50</span></span></div>
+              <div class="goal__row"><span>Riders</span><span><b data-count="riders">0</b> / <span data-goal="riders">50</span></span></div>
               <div class="goal__bar"><i data-bar="riders"></i></div>
             </div>
             <div class="goal">
-              <div class="goal__row"><span>Bike owners</span><span><b data-count="owners">–</b> / <span data-goal="owners">15</span></span></div>
+              <div class="goal__row"><span>Bike owners</span><span><b data-count="owners">0</b> / <span data-goal="owners">15</span></span></div>
               <div class="goal__bar"><i data-bar="owners"></i></div>
-            </div>
             </div>
           </div>
         </div>
@@ -815,8 +849,21 @@
             </div>
 
             <div class="field">
-              <label for="f-class">Class or year</label>
-              <input id="f-class" name="class_year" type="text" autocorrect="off" enterkeyhint="next" maxlength="20" required aria-describedby="err-class_year" placeholder="e.g. 10b or Year 11">
+              <label for="f-class">Year group</label>
+              <!-- [TODO: confirm the school's year groups] -->
+              <select id="f-class" name="class_year" required aria-describedby="err-class_year">
+                <option value="">Choose your year</option>
+                <option value="Year 5">Year 5</option>
+                <option value="Year 6">Year 6</option>
+                <option value="Year 7">Year 7</option>
+                <option value="Year 8">Year 8</option>
+                <option value="Year 9">Year 9</option>
+                <option value="Year 10">Year 10</option>
+                <option value="Year 11">Year 11</option>
+                <option value="Year 12">Year 12</option>
+                <option value="Year 13">Year 13</option>
+                <option value="Other">Other</option>
+              </select>
               <p class="field__error" id="err-class_year" data-error-for="class_year" role="alert" hidden></p>
             </div>
 
@@ -845,10 +892,18 @@
               <p class="field__error" id="err-bike_type" data-error-for="bike_type" role="alert" hidden></p>
             </div>
 
+            <!-- LEGAL REVIEW: consent wording for under 18s and the parent email field
+                 must be checked by someone qualified before launch. -->
+            <div class="field">
+              <label for="f-parent">Parent's email <span class="field__optional">optional, for riders under 18</span></label>
+              <input id="f-parent" name="parent_email" type="email" autocomplete="off" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="120" aria-describedby="err-parent_email" placeholder="parent@example.com">
+              <p class="field__error" id="err-parent_email" data-error-for="parent_email" role="alert" hidden></p>
+            </div>
+
             <label class="check">
               <input type="checkbox" name="age_ok" required aria-describedby="err-age_ok">
               <span class="check__box"><svg><use href="#i-check"/></svg></span>
-              <span>I am 16 or older, or I have my parent's permission.</span>
+              <span>I am 18 or older. Or I am under 18 and a parent or guardian agrees to my sign-up and to paid rides and credit later.</span>
             </label>
             <p class="field__error" id="err-age_ok" data-error-for="age_ok" role="alert" hidden></p>
 
@@ -871,7 +926,8 @@
               <span class="btn__label">Join the waitlist</span>
               <svg class="btn__icon"><use href="#i-arrow"/></svg>
             </button>
-            <p class="form__fine">No account, no password. We'll send one email to confirm your address.</p>
+            <p class="form__fine">No password. We'll send one email to confirm your address.</p>
+            <p class="form__fine">After you confirm your email, we'll write to you <span class="todo">[TODO: confirm timeline, for example "in December before the pilot starts"]</span>.</p>
           </form>
 
           <!-- Thank-you state, shown after a successful submit -->
@@ -883,6 +939,39 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 8b · FOR PARENTS
+       Short answers. Every [TODO] must be confirmed by the founders.
+       ======================================================================== -->
+  <section class="section section--tight-top" id="parents">
+    <div class="container">
+      <h2 class="h2 reveal">For parents.</h2>
+      <p class="lead reveal">Straight answers about school, safety and money.</p>
+      <ul class="parents">
+        <li class="reveal">
+          <h3>Is the school involved?</h3>
+          <p><span class="todo">[TODO: confirm school approval, or state that Share a Bike is an independent student project]</span></p>
+        </li>
+        <li class="reveal">
+          <h3>Who is liable if something happens?</h3>
+          <p>Riders pay for damage or loss of a bike, and we handle it with them. <span class="todo">[TODO: confirm liability insurance for riders, and what covers a damaged or stolen bike beyond the rider paying]</span></p>
+        </li>
+        <li class="reveal">
+          <h3>Can students leave campus at lunch?</h3>
+          <p><span class="todo">[TODO: confirm with school rules]</span></p>
+        </li>
+        <li class="reveal">
+          <h3>Where is the station, and how safe is the route?</h3>
+          <p>The station is at school, and EDEKA Paasch is 1.5 km away. Helmets are required on every ride. <span class="todo">[TODO: confirm station location, cycle path and lighting in winter]</span></p>
+        </li>
+        <li class="reveal">
+          <h3>My child is under 18. What do I need to know?</h3>
+          <p>Riders under 18 need a parent's consent for paid rides and top-up credit. Your child can add your email when signing up. <span class="todo">[TODO: confirm how parental consent is collected]</span></p>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -927,7 +1016,7 @@
         </details>
         <details>
           <summary>What if I return a bike late?<svg><use href="#i-plus"/></svg></summary>
-          <p>You get a short block from the service, so the next rider is not left waiting.</p>
+          <p>Late returns lead to a booking block, so the next rider is not left waiting: <span class="todo">[TODO: confirm block length per minutes late]</span>.</p>
         </details>
       </div>
       </div>
@@ -970,6 +1059,7 @@
           <a href="#how">How it works</a>
           <a href="#pricing">Pricing</a>
           <a href="#safety">Safety and rules</a>
+          <a href="#parents">For parents</a>
           <a href="#faq">FAQ</a>
         </div>
         <div>
@@ -996,7 +1086,7 @@
     <p class="footer__giant" aria-hidden="true">Share a Bike<span>.</span></p>
     <div class="footer__bottom">
       <p>Bike sharing at Schule Louisenlund</p>
-      <p>No tracking cookies. No analytics. © <span data-year>2026</span> Share&nbsp;a&nbsp;Bike</p>
+      <p><a href="de.html" hreflang="de" lang="de">Deutsch</a> · No tracking cookies. No analytics. © <span data-year>2026</span> Share&nbsp;a&nbsp;Bike</p>
     </div>
   </div>
 </footer>

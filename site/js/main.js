@@ -15,6 +15,48 @@
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* Texts written by this script, in English and German. The page language
+     (<html lang>) decides which set is used: index.html = en, de.html = de. */
+  var LANG = (document.documentElement.lang || "en").slice(0, 2) === "de" ? "de" : "en";
+  var T = {
+    en: {
+      openMenu: "Open menu", closeMenu: "Close menu",
+      emailEmpty: "Please enter your email address.",
+      emailInvalid: "That doesn't look like an email address. Example: ",
+      emailDomain: "Please use your school email, like ",
+      parentInvalid: "That doesn't look like an email address. Leave it empty if you are 18 or older.",
+      name: "Please tell us your first name.",
+      year: "Please choose your year group.",
+      bike: "Please choose your bike type.",
+      age: "Please confirm this to join.",
+      privacy: "Please confirm you've read the privacy notice.",
+      fix: function (n) { return "Please fix the " + n + " fields marked in red."; },
+      sending: "Sending…", join: "Join the waitlist",
+      failed: "Something went wrong. Please try again.",
+      offline: "We could not reach the server. Please check your connection and try again.",
+      atPaasch: " min</b> at Paasch", late: " min late</b> back to class",
+      plans: { ppr: "Pay per ride", basic: "Basic", premium: "Premium" }, and: " and "
+    },
+    de: {
+      openMenu: "Menü öffnen", closeMenu: "Menü schließen",
+      emailEmpty: "Bitte gib deine E-Mail-Adresse ein.",
+      emailInvalid: "Das sieht nicht wie eine E-Mail-Adresse aus. Beispiel: ",
+      emailDomain: "Bitte nutze deine Schul-E-Mail, zum Beispiel ",
+      parentInvalid: "Das sieht nicht wie eine E-Mail-Adresse aus. Lass das Feld leer, wenn du 18 oder älter bist.",
+      name: "Bitte gib deinen Vornamen ein.",
+      year: "Bitte wähle deinen Jahrgang.",
+      bike: "Bitte wähle deinen Fahrradtyp.",
+      age: "Bitte bestätige das, um mitzumachen.",
+      privacy: "Bitte bestätige, dass du die Datenschutzerklärung gelesen hast.",
+      fix: function (n) { return "Bitte korrigiere die " + n + " rot markierten Felder."; },
+      sending: "Wird gesendet…", join: "Auf die Warteliste",
+      failed: "Etwas ist schiefgelaufen. Bitte versuche es noch einmal.",
+      offline: "Wir konnten den Server nicht erreichen. Bitte prüfe deine Verbindung und versuche es noch einmal.",
+      atPaasch: " Min.</b> bei Paasch", late: " Min. zu spät</b> zurück im Unterricht",
+      plans: { ppr: "Pay per Ride", basic: "Basic", premium: "Premium" }, and: " und "
+    }
+  }[LANG];
+
   var year = $("[data-year]");
   if (year) year.textContent = new Date().getFullYear();
 
@@ -45,7 +87,7 @@
   function setMenu(open) {
     if (!toggle || !menu) return;
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    toggle.setAttribute("aria-label", open ? T.closeMenu : T.openMenu);
     menu.hidden = !open;
   }
   if (toggle && menu) {
@@ -102,9 +144,9 @@
   }
 
   function emailProblem(email) {
-    if (!email) return "Please enter your email address.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "That doesn't look like an email address. Example: " + EXAMPLE;
-    if (!isSchoolEmail(email)) return "Please use your school email, like " + EXAMPLE;
+    if (!email) return T.emailEmpty;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return T.emailInvalid + EXAMPLE;
+    if (!isSchoolEmail(email)) return T.emailDomain + EXAMPLE;
     return "";
   }
 
@@ -130,19 +172,20 @@
   function validate() {
     var f = form.elements;
     var problems = [
-      [f.name, f.name.value.trim() ? "" : "Please tell us your first name."],
+      [f.name, f.name.value.trim() ? "" : T.name],
       [f.email, emailProblem(f.email.value.trim())],
-      [f.class_year, f.class_year.value.trim() ? "" : "Please add your class or year, e.g. 10b."],
-      [bikeSelect, bikeSelect.required && !bikeSelect.value ? "Please choose your bike type." : ""],
-      [f.age_ok, f.age_ok.checked ? "" : "Please confirm this to join."],
-      [f.privacy_ok, f.privacy_ok.checked ? "" : "Please confirm you've read the privacy notice."]
+      [f.class_year, f.class_year.value ? "" : T.year],
+      [bikeSelect, bikeSelect.required && !bikeSelect.value ? T.bike : ""],
+      [f.parent_email, !f.parent_email.value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.parent_email.value.trim()) ? "" : T.parentInvalid],
+      [f.age_ok, f.age_ok.checked ? "" : T.age],
+      [f.privacy_ok, f.privacy_ok.checked ? "" : T.privacy]
     ];
     var first = null, count = 0;
     problems.forEach(function (pr) {
       setFieldError(pr[0], pr[1]);
       if (pr[1]) { count++; if (!first) first = pr[0]; }
     });
-    showSummary(count > 1 ? "Please fix the " + count + " fields marked in red." : "");
+    showSummary(count > 1 ? T.fix(count) : "");
     if (first) {
       first.focus({ preventScroll: true });
       first.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
@@ -189,7 +232,8 @@
       var payload = {
         name: f.name.value.trim(),
         email: f.email.value.trim().toLowerCase(),
-        class_year: f.class_year.value.trim(),
+        class_year: f.class_year.value,
+        parent_email: f.parent_email.value.trim().toLowerCase() || null,
         role: f.role.value,
         bike_type: bikeSelect.required ? bikeSelect.value : null,
         age_ok: f.age_ok.checked,
@@ -200,7 +244,7 @@
       var button = $('button[type="submit"]', form);
       var label = $(".btn__label", button);
       button.setAttribute("aria-busy", "true");
-      label.textContent = "Sending…";
+      label.textContent = T.sending;
 
       var request;
       if (!CONFIG.endpoint) {
@@ -214,7 +258,7 @@
           body: JSON.stringify(payload)
         }).then(function (res) {
           return res.json().catch(function () { return {}; }).then(function (body) {
-            if (!res.ok || !body.ok) throw new Error(body.error || "Something went wrong. Please try again.");
+            if (!res.ok || !body.ok) throw new Error(body.error || T.failed);
           });
         });
       }
@@ -222,11 +266,11 @@
       request.then(function () {
         showThanks(payload.email);
       }).catch(function (err) {
-        var msg = err && err.message && !/fetch|network/i.test(err.message) ? err.message : "We could not reach the server. Please check your connection and try again.";
+        var msg = err && err.message && !/fetch|network/i.test(err.message) ? err.message : T.offline;
         showSummary(msg);
       }).then(function () {
         button.removeAttribute("aria-busy");
-        label.textContent = "Join the waitlist";
+        label.textContent = T.join;
       });
     });
   }
@@ -247,14 +291,9 @@
     requestAnimationFrame(step);
   }
 
-  // Below CONFIG.showCountFrom confirmed sign-ups the page shows the goal
-  // instead of small numbers (a big "0" next to the form reads as "nobody wants this").
+  // Confirmed sign-ups. The HTML starts at 0 for riders, owners and total,
+  // so a failed request or missing JS still shows an intentional "0 / 50".
   function renderStats(stats) {
-    var total = stats.total || 0;
-    var showNumbers = total >= (CONFIG.showCountFrom || 10);
-    $("[data-counter-goal]", counter).hidden = showNumbers;
-    $("[data-counter-live]", counter).hidden = !showNumbers;
-    if (!showNumbers) return;
     ["total", "riders", "owners"].forEach(function (key) {
       var el = $('[data-count="' + key + '"]', counter);
       if (el) animateNumber(el, stats[key] || 0);
@@ -269,11 +308,11 @@
 
   function loadStats() {
     if (!counter) return;
-    if (!CONFIG.endpoint) { renderStats({ total: 0, riders: 0, owners: 0 }); return; } // demo mode: goal framing
+    if (!CONFIG.endpoint) return; // demo mode: the zeros in the HTML stay
     fetch(CONFIG.endpoint + (CONFIG.endpoint.indexOf("?") > -1 ? "&" : "?") + "stats=1")
       .then(function (res) { return res.ok ? res.json() : Promise.reject(); })
       .then(renderStats)
-      .catch(function () { renderStats({ total: 0 }); }); // backend unreachable: show the goal, never broken numbers
+      .catch(function () { /* backend unreachable: the zeros in the HTML stay */ });
   }
 
   // load when the sign up section comes close, so the count-up is visible
@@ -323,6 +362,40 @@
     $(".features", features).addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") showFeature(pinned); });
   }
 
+  /* ---- Cost slider ("Which plan is cheapest?") -------------------------
+     Rides under 30 minutes, reservation fees not included:
+     pay per ride 2 € per ride, Basic 5 € + 1 € per ride, Premium 12 € flat. */
+  var costSlider = $("[data-cost-slider]");
+  if (costSlider) {
+    var COST = {
+      ppr: function (n) { return 2 * n; },
+      basic: function (n) { return 5 + 1 * n; },
+      premium: function () { return 12; }
+    };
+    var ridesInput = $("#rides-n", costSlider);
+    var updateCosts = function () {
+      var n = parseInt(ridesInput.value, 10);
+      $("[data-rides]", costSlider).textContent = n;
+      var costs = {}, max = 0, min = Infinity;
+      Object.keys(COST).forEach(function (k) { costs[k] = COST[k](n); max = Math.max(max, costs[k]); min = Math.min(min, costs[k]); });
+      var best = [];
+      Object.keys(COST).forEach(function (k) {
+        var li = $('[data-plan="' + k + '"]', costSlider);
+        $("[data-cost=" + k + "]", li).textContent = costs[k] + " €";
+        li.querySelector(".cost-slider__track i").style.setProperty("--w", (costs[k] / max * 100) + "%");
+        var isBest = costs[k] === min;
+        li.classList.toggle("is-best", isBest);
+        if (isBest) best.push(T.plans[k]);
+      });
+      $("[data-best]", costSlider).textContent = best.join(T.and);
+    };
+    ridesInput.addEventListener("input", updateCosts);
+    costSlider.hidden = false;
+    var costTable = $("[data-cost-table]");
+    if (costTable) costTable.classList.add("is-replaced"); // the static table stays for no-JS visitors
+    updateCosts();
+  }
+
   /* ---- 6. Lunch break planner ------------------------------------------
      EDEKA Paasch is 1.5 km away. Minutes one way: about 18 on foot (5 km/h),
      about 5 by bike (17 km/h). Change these if you measure better values. */
@@ -344,8 +417,8 @@
       segs[1].classList.toggle("seg--stay", stay >= 0);
       var result = $('[data-result="' + mode + '"]', planner);
       result.innerHTML = stay >= 0
-        ? "<b>" + stay + " min</b> at Paasch"
-        : "<b>" + -stay + " min late</b> back to class";
+        ? "<b>" + stay + T.atPaasch
+        : "<b>" + -stay + T.late;
     });
   }
   if (planner) {

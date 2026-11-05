@@ -20,10 +20,6 @@ window.SITE_CONFIG = {
 
   /* Waitlist goals shown next to the live counter */
   goals: { riders: 50, owners: 15 },
-
-  /* The live numbers appear once this many people have confirmed.
-     Below that the page shows the goal instead of a small number. */
-  showCountFrom: 10,
 };
 
 /* Tells the CSS that JavaScript runs (enables scroll animations).
